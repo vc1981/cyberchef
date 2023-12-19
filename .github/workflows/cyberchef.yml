@@ -40,7 +40,7 @@ jobs:
       run: npx grunt copy:ghPages
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4.0.0
       with:
         name: cyberchef
-        path: 
+        path: build/prod/*.zip
