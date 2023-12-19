@@ -1,0 +1,37 @@
+name: "Cyberchef Build, Deploy"
+
+on:
+  schedule:
+  -  cron: "0 2 * * 1-5"
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Cyberchef code checkout
+      with:
+        repository: gchq/CyberChef
+
+    - name: Set node version
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.x'
+
+    - name: Install
+      run: |
+        npm install
+        npm run setheapsize
+    - name: Lint
+      run: npx grunt lint
+
+    - name: Production Build
+      if: success()
+      run: npx grunt prod --msg="Version 10 is here! Read about the new features <a href='https://github.com/gchq/CyberChef/wiki/Character-encoding,-EOL-separators,-and-editor-features'>here</a>"
+
+    - name: Generate sitemap
+      run: npx grunt exec:sitemap
+
+    - name: Prepare for GitHub Pages
+      if: success()
+      run: npx grunt copy:ghPages
