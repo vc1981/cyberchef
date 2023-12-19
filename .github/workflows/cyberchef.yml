@@ -38,3 +38,9 @@ jobs:
     - name: Prepare for GitHub Pages
       if: success()
       run: npx grunt copy:ghPages
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: cyberchef
+        path: 
