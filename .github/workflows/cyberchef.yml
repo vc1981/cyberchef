@@ -1,8 +1,11 @@
 name: "Cyberchef Build, Deploy"
 
 on:
-  schedule:
-  -  cron: "0 2 * * 1-5"
+  workflow_dispatch:
+  push:
+    branches:
+    - master
+    
 jobs:
   main:
     runs-on: ubuntu-latest
